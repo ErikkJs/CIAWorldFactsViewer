@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Detail</title>
+    <link href="/css/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-center mb-12">Country Profile</h1>
+        <% function renderObject(obj, indent = 0) { %>
+            <% for (const [key, value] of Object.entries(obj)) { %>
+                <% if (typeof value === 'object' && value !== null && !(value instanceof Array)) { %>
+                    <div style="margin-left: <%= indent %>px;">
+                        <h2 class="text-xl font-semibold"><%= key.replace(/([A-Z])/g, ' $1').trim() %></h2>
+                        <%= renderObject(value, indent + 20) %>
+                    </div>
+                <% } else { %>
+                    <div style="margin-left: <%= indent %>px;" class="mb-2">
+                        <strong><%= key.replace(/([A-Z])/g, ' $1').trim() %>:</strong> <%= value.text ? value.text : value %>
+                    </div>
+                <% } %>
+            <% } %>
+        <% } %>
+
+        <% for (const section in countryData) { %>
+            <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+                <h2 class="text-2xl font-bold mb-4"><%= section.replace(/([A-Z])/g, ' $1').trim() %></h2>
+                <% renderObject(countryData[section]) %>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>
